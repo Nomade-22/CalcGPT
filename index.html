@@ -5,16 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CalcGPT</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
   <header>
-    <h1 class="title">⚡ Orçamento IAGPT</h1>
-    <p class="subtitle">Seu assistente inteligente para cálculos e orçamentos</p>
+    <h1>CalcGPT</h1>
+    <p class="subtitle">Assistente para cálculos e orçamentos</p>
   </header>
 
   <main id="chat">
-    <div id="messages" class="glass"></div>
+    <div id="messages"></div>
     <div class="input-area">
       <input id="input" type="text" placeholder="Digite sua pergunta...">
       <button onclick="sendMessage()">Enviar</button>
@@ -22,7 +24,15 @@
   </main>
 
   <footer>
-    <p>⚙️ V2J Digital · 2025</p>
+    <p>© 2025 · Powered by AI</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/v2j_digital?igsh=M282NmswNnc1Y3Uw" target="_blank">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.facebook.com/share/1Cedz1Kfds/" target="_blank">
+        <i class="fab fa-facebook"></i>
+      </a>
+    </div>
   </footer>
 
   <script src="script.js"></script>
