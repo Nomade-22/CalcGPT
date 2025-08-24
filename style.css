@@ -155,3 +155,122 @@ footer {
   margin-top: 10px;
   color: #cbd5e1;
 }
+/* ===== HERO FUTURISTA COM LOGO ===== */
+.hero {
+  position: relative;
+  background: linear-gradient(135deg, #0f172a 0%, #111827 40%, #1e293b 100%);
+  border-bottom: 2px solid #2563eb;
+  padding: 56px 20px;
+  overflow: hidden;
+}
+
+.hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  align-items: center;
+  gap: 28px;
+}
+
+.hero-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0b1220;
+  border: 1px solid #22314a;
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.25);
+}
+
+.hero-logo img {
+  width: 120px;            /* ajuste conforme seu arquivo */
+  height: 120px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(37,99,235,0.35));
+}
+
+.hero-content {
+  position: relative;
+}
+
+.hero-title {
+  margin: 0;
+  font-size: 3rem;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  text-shadow: 0 0 18px rgba(37, 99, 235, 0.65);
+}
+
+.hero-subtitle {
+  margin: 10px 0 0;
+  font-size: 1.1rem;
+  color: #cbd5e1;
+}
+
+.hero-glow {
+  pointer-events: none;
+  position: absolute;
+  inset: -40% -10% auto -10%;
+  height: 120%;
+  background: radial-gradient(60% 60% at 50% 40%, rgba(37, 99, 235, 0.16), rgba(37, 99, 235, 0.04), transparent 70%);
+  animation: heroPulse 7s infinite ease-in-out;
+}
+
+@keyframes heroPulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.12); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .hero {
+    padding: 40px 16px;
+  }
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    text-align: center;
+  }
+  .hero-logo {
+    margin: 0 auto;
+  }
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+}
+
+/* ===== RODAPÉ / ÍCONES SOCIAIS (grandes, brancos, com barra) ===== */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #1e293b;
+}
+
+.social-links {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.social-links a {
+  color: #ffffff;      /* branco fixo */
+  font-size: 3.2rem;   /* bem grandes */
+  text-decoration: none;
+}
+
+.social-links .divider {
+  width: 3px;
+  height: 50px;
+  background-color: #ffffff;
+  opacity: 0.9;
+}
