@@ -110,3 +110,48 @@ footer {
   background-color: #ffffff;
   opacity: 0.8;
 }
+/* Banner futurista */
+.hero {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  text-align: center;
+  padding: 80px 20px;
+  border-bottom: 2px solid #2563eb;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(37, 99, 235, 0.2), transparent 70%);
+  animation: pulse 6s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.2); opacity: 0.3; }
+  100% { transform: scale(1); opacity: 0.6; }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0px 0px 15px rgba(37, 99, 235, 0.8);
+  letter-spacing: 2px;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  color: #cbd5e1;
+}
