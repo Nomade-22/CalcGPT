@@ -1,36 +1,43 @@
+// URL do seu backend no Render
+const BACKEND_URL = "https://orcamentistabeckend.onrender.com/chat";
+
 async function sendMessage() {
   const input = document.getElementById("input");
   const messages = document.getElementById("messages");
 
-  if (!input.value.trim()) return;
+  const text = (input.value || "").trim();
+  if (!text) return;
 
-  // Exibir mensagem do usuário
+  // 1) mostra a mensagem do usuário na tela
   const userMsg = document.createElement("div");
   userMsg.className = "msg user";
-  userMsg.textContent = input.value;
+  userMsg.innerText = text;
   messages.appendChild(userMsg);
 
-  // Chamar backend (a ser configurado)
+  // 2) chama o backend
   try {
-    const response = await fetch("https://seu-backend.onrender.com/chat", {
+    const resp = await fetch(BACKEND_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: input.value })
+      body: JSON.stringify({ message: text })
     });
 
-    const data = await response.json();
+    // se o backend estiver “acordando”, a primeira resposta pode demorar ~30–60s
+    const data = await resp.json();
 
+    // 3) mostra a resposta da IA
     const botMsg = document.createElement("div");
     botMsg.className = "msg bot";
-    botMsg.textContent = data.reply;
+    botMsg.innerText = data.reply || "Sem resposta do servidor.";
     messages.appendChild(botMsg);
   } catch (err) {
     const botMsg = document.createElement("div");
     botMsg.className = "msg bot";
-    botMsg.textContent = "⚠️ Erro ao conectar com o servidor.";
+    botMsg.innerText = "⚠️ Erro ao conectar com o servidor.";
     messages.appendChild(botMsg);
   }
 
+  // 4) limpa input e rola pro fim
   input.value = "";
   messages.scrollTop = messages.scrollHeight;
 }
