@@ -1,276 +1,183 @@
-body {
-  background: #0f172a;
-  color: #f8fafc;
-  font-family: Inter, sans-serif;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+/* Base */
+:root{
+  --bg-1:#0f172a;
+  --bg-2:#111827;
+  --bg-3:#1e293b;
+  --blue:#2563eb;
+  --text:#f8fafc;
+  --muted:#cbd5e1;
 }
 
-header, footer {
-  background: #1e293b;
-  text-align: center;
-  padding: 20px;
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif;
+  background: var(--bg-1);
+  color: var(--text);
+  display:flex;
+  flex-direction:column;
 }
 
-#chat {
-  flex: 1;
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #1e293b;
-  border-radius: 10px;
+/* ===== HERO FUTURISTA (logo acima + título abaixo) ===== */
+.hero{
+  position:relative;
+  background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 40%, var(--bg-3) 100%);
+  border-bottom:2px solid var(--blue);
+  padding:60px 20px 48px;
+  text-align:center;
+  overflow:hidden;
 }
 
-#messages {
-  height: 400px;
-  overflow-y: auto;
-  border: 1px solid #334155;
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 15px;
-  background: #0f172a;
+.hero-inner{
+  position:relative;
+  z-index:1;
+  max-width:1100px;
+  margin:0 auto;
 }
 
-.msg {
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 10px;
-  max-width: 70%;
+.hero-logo{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:18px;
 }
 
-.user {
-  background: #2563eb;
-  margin-left: auto;
-  text-align: right;
+.hero-logo img{
+  width:140px;
+  height:auto;
+  object-fit:contain;
+  filter: drop-shadow(0 0 14px rgba(37,99,235,.45));
 }
 
-.bot {
-  background: #334155;
-  margin-right: auto;
-  text-align: left;
+.hero-title{
+  margin:0;
+  font-size:2.8rem;
+  font-weight:700;
+  letter-spacing:1.2px;
+  color:#fff;
+  text-shadow:0 0 18px rgba(37,99,235,.55);
 }
 
-.input-area {
-  display: flex;
-  gap: 10px;
+.hero-subtitle{
+  margin:12px 0 0 0;
+  font-size:1.1rem;
+  color:var(--muted);
 }
 
-input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
+.hero-glow{
+  pointer-events:none;
+  position:absolute;
+  inset:-40% -10% auto -10%;
+  height:120%;
+  background: radial-gradient(60% 60% at 50% 40%, rgba(37,99,235,.16), rgba(37,99,235,.05), transparent 70%);
+  animation:heroPulse 7s infinite ease-in-out;
 }
 
-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  background: #2563eb;
-  color: white;
-  cursor: pointer;
+@keyframes heroPulse{
+  0%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.12);opacity:.75}
+  100%{transform:scale(1);opacity:1}
 }
 
-button:hover {
-  background: #1d4ed8;
+/* ===== CHAT CARD ===== */
+#chat{
+  flex:1;
+  max-width:900px;
+  width:100%;
+  margin:24px auto 32px;
+  padding:20px;
+  background: var(--bg-3);
+  border:1px solid #22314a;
+  border-radius:16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.25);
 }
 
-footer {
-  text-align: center;
-  padding: 20px;
-  background: #1e293b;
+#messages{
+  height:420px;
+  overflow-y:auto;
+  border:1px solid #334155;
+  border-radius:12px;
+  padding:14px;
+  background: var(--bg-1);
 }
 
-.social-links {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px; /* espaço maior entre ícones */
+.msg{
+  padding:10px 12px;
+  margin:6px 0;
+  border-radius:12px;
+  max-width:78%;
+  line-height:1.45;
+  word-wrap:break-word;
 }
 
-.social-links a {
-  color: #ffffff;       /* sempre brancos */
-  font-size: 3rem;      /* ícones bem grandes */
-  text-decoration: none;
-  transition: transform 0.3s;
+.user{background:#1f2a44; margin-left:auto; border:1px solid #2a3b5f}
+.bot{ background:#172133; margin-right:auto; border:1px solid #24324d}
+
+.input-area{
+  display:flex;
+  gap:10px;
+  margin-top:14px;
 }
 
-.social-links a:hover {
-  transform: scale(1.2); /* cresce ao passar o mouse */
+.input-area input{
+  flex:1;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid #334155;
+  background:#0b1220;
+  color:#e5e7eb;
+  outline:none;
 }
 
-/* Barra de divisão entre os ícones */
-.social-links .divider {
-  width: 2px;
-  height: 40px;        /* altura ajustada para ícones grandes */
-  background-color: #ffffff;
-  opacity: 0.8;
+.input-area button{
+  padding:12px 18px;
+  border:none;
+  border-radius:10px;
+  background: var(--blue);
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+  transition: transform .08s ease;
 }
-/* Banner futurista */
-.hero {
-  background: linear-gradient(135deg, #0f172a, #1e293b);
-  text-align: center;
-  padding: 80px 20px;
-  border-bottom: 2px solid #2563eb;
-  position: relative;
-  overflow: hidden;
+.input-area button:active{ transform: scale(.98) }
+
+/* ===== RODAPÉ + ÍCONES (brancos, grandes, com barra) ===== */
+footer{
+  text-align:center;
+  padding:20px;
+  background: var(--bg-3);
+  border-top:1px solid #22314a;
 }
 
-.hero::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle at center, rgba(37, 99, 235, 0.2), transparent 70%);
-  animation: pulse 6s infinite;
+.social-links{
+  margin-top:15px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:40px;
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 0.6; }
-  50% { transform: scale(1.2); opacity: 0.3; }
-  100% { transform: scale(1); opacity: 0.6; }
+.social-links a{
+  color:#fff;         /* branco fixo */
+  font-size:3.2rem;   /* bem grandes */
+  text-decoration:none;
 }
 
-.hero-content {
-  position: relative;
-  z-index: 1;
+.social-links .divider{
+  width:3px;
+  height:50px;
+  background-color:#fff;
+  opacity:.9;
 }
 
-.hero-title {
-  font-size: 3.5rem;
-  font-weight: 700;
-  color: #ffffff;
-  text-shadow: 0px 0px 15px rgba(37, 99, 235, 0.8);
-  letter-spacing: 2px;
-}
-
-.hero-subtitle {
-  font-size: 1.2rem;
-  margin-top: 10px;
-  color: #cbd5e1;
-}
-/* ===== HERO FUTURISTA COM LOGO ===== */
-.hero {
-  position: relative;
-  background: linear-gradient(135deg, #0f172a 0%, #111827 40%, #1e293b 100%);
-  border-bottom: 2px solid #2563eb;
-  padding: 56px 20px;
-  overflow: hidden;
-}
-
-.hero-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 160px 1fr;
-  align-items: center;
-  gap: 28px;
-}
-
-.hero-logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #0b1220;
-  border: 1px solid #22314a;
-  border-radius: 16px;
-  padding: 14px;
-  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.25);
-}
-
-.hero-logo img {
-  width: 120px;            /* ajuste conforme seu arquivo */
-  height: 120px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 12px rgba(37,99,235,0.35));
-}
-
-.hero-content {
-  position: relative;
-}
-
-.hero-title {
-  margin: 0;
-  font-size: 3rem;
-  line-height: 1.1;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: #ffffff;
-  text-shadow: 0 0 18px rgba(37, 99, 235, 0.65);
-}
-
-.hero-subtitle {
-  margin: 10px 0 0;
-  font-size: 1.1rem;
-  color: #cbd5e1;
-}
-
-.hero-glow {
-  pointer-events: none;
-  position: absolute;
-  inset: -40% -10% auto -10%;
-  height: 120%;
-  background: radial-gradient(60% 60% at 50% 40%, rgba(37, 99, 235, 0.16), rgba(37, 99, 235, 0.04), transparent 70%);
-  animation: heroPulse 7s infinite ease-in-out;
-}
-
-@keyframes heroPulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.12); opacity: 0.7; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-/* Responsivo */
-@media (max-width: 768px) {
-  .hero {
-    padding: 40px 16px;
-  }
-  .hero-inner {
-    grid-template-columns: 1fr;
-    gap: 18px;
-    text-align: center;
-  }
-  .hero-logo {
-    margin: 0 auto;
-  }
-  .hero-title {
-    font-size: 2.2rem;
-  }
-  .hero-subtitle {
-    font-size: 1rem;
-  }
-}
-
-/* ===== RODAPÉ / ÍCONES SOCIAIS (grandes, brancos, com barra) ===== */
-footer {
-  text-align: center;
-  padding: 20px;
-  background: #1e293b;
-}
-
-.social-links {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-}
-
-.social-links a {
-  color: #ffffff;      /* branco fixo */
-  font-size: 3.2rem;   /* bem grandes */
-  text-decoration: none;
-}
-
-.social-links .divider {
-  width: 3px;
-  height: 50px;
-  background-color: #ffffff;
-  opacity: 0.9;
+/* ===== Responsivo ===== */
+@media (max-width: 768px){
+  .hero{ padding:44px 16px 36px }
+  .hero-logo img{ width:120px }
+  .hero-title{ font-size:2.2rem }
+  #chat{ margin:18px 12px 28px; padding:16px }
+  #messages{ height:360px }
+  .social-links{ gap:28px }
+  .social-links .divider{ height:42px }
 }
