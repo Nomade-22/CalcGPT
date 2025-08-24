@@ -1,44 +1,64 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CalcGPT</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <!-- Font Awesome para ícones -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Estilos do projeto -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Tipografia -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome (ícones) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
+
+  <!-- HERO / BANNER -->
   <header class="hero">
-  <div class="hero-content">
-    <h1 class="hero-title">CalcGPT</h1>
-    <p class="hero-subtitle">Inteligência Artificial para cálculos e orçamentos</p>
-  </div>
-</header> e orçamentos</p>
+    <div class="hero-inner">
+      <div class="hero-logo">
+        <!-- Coloque um arquivo "logo-ai.png" na raiz do repositório -->
+        <img src="logo-ai.png" alt="Logo de Inteligência Artificial" />
+      </div>
+      <div class="hero-content">
+        <h1 class="hero-title">CalcGPT</h1>
+        <p class="hero-subtitle">Inteligência Artificial para cálculos e orçamentos</p>
+      </div>
+    </div>
+    <div class="hero-glow"></div>
   </header>
 
+  <!-- ÁREA DO CHAT -->
   <main id="chat">
     <div id="messages"></div>
     <div class="input-area">
-      <input id="input" type="text" placeholder="Digite sua pergunta...">
+      <input id="input" type="text" placeholder="Digite sua pergunta..." />
       <button onclick="sendMessage()">Enviar</button>
     </div>
   </main>
 
+  <!-- RODAPÉ -->
   <footer>
     <p>© 2025 · Powered by AI</p>
+
     <div class="social-links">
-      <a href="https://www.instagram.com/v2j_digital?igsh=M282NmswNnc1Y3Uw" target="_blank">
+      <a href="https://www.instagram.com/v2j_digital?igsh=M282NmswNnc1Y3Uw" target="_blank" rel="noopener" aria-label="Instagram">
         <i class="fab fa-instagram"></i>
       </a>
+
+      <!-- Barra vertical entre os ícones -->
       <div class="divider"></div>
-      <a href="https://www.facebook.com/share/1Cedz1Kfds/" target="_blank">
+
+      <a href="https://www.facebook.com/share/1Cedz1Kfds/" target="_blank" rel="noopener" aria-label="Facebook">
         <i class="fab fa-facebook"></i>
       </a>
     </div>
   </footer>
 
+  <!-- Lógica do chat (conecta ao backend na Parte 2) -->
   <script src="script.js"></script>
 </body>
-</html> 
+</html>
