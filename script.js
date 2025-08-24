@@ -8,13 +8,12 @@ async function sendMessage() {
   const text = (input.value || "").trim();
   if (!text) return;
 
-  // 1) mostra a mensagem do usuário na tela
+  // mostra a mensagem do usuário
   const userMsg = document.createElement("div");
   userMsg.className = "msg user";
   userMsg.innerText = text;
   messages.appendChild(userMsg);
 
-  // 2) chama o backend
   try {
     const resp = await fetch(BACKEND_URL, {
       method: "POST",
@@ -22,10 +21,10 @@ async function sendMessage() {
       body: JSON.stringify({ message: text })
     });
 
-    // se o backend estiver “acordando”, a primeira resposta pode demorar ~30–60s
+    // lê a resposta (pode demorar um pouco na 1ª vez por causa do plano grátis)
     const data = await resp.json();
 
-    // 3) mostra a resposta da IA
+    // mostra a resposta da IA
     const botMsg = document.createElement("div");
     botMsg.className = "msg bot";
     botMsg.innerText = data.reply || "Sem resposta do servidor.";
@@ -37,7 +36,6 @@ async function sendMessage() {
     messages.appendChild(botMsg);
   }
 
-  // 4) limpa input e rola pro fim
   input.value = "";
   messages.scrollTop = messages.scrollHeight;
 }
