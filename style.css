@@ -89,25 +89,24 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px; /* espaço entre ícones e a barra */
+  gap: 40px; /* espaço maior entre ícones */
 }
 
 .social-links a {
-  color: #ffffff; /* branco */
-  font-size: 2rem; /* ícones maiores */
+  color: #ffffff;       /* sempre brancos */
+  font-size: 3rem;      /* ícones bem grandes */
   text-decoration: none;
-  transition: transform 0.3s, color 0.3s;
+  transition: transform 0.3s;
 }
 
 .social-links a:hover {
-  color: #2563eb; /* azul futurista ao passar o mouse */
-  transform: scale(1.2); /* aumenta levemente */
+  transform: scale(1.2); /* cresce ao passar o mouse */
 }
 
-/* Barra de divisão */
+/* Barra de divisão entre os ícones */
 .social-links .divider {
   width: 2px;
-  height: 28px;
+  height: 40px;        /* altura ajustada para ícones grandes */
   background-color: #ffffff;
-  opacity: 0.6;
+  opacity: 0.8;
 }
