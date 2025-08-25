@@ -7,6 +7,7 @@
 
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <!-- Estilos mínimos do modal (para não mexer no style.css) -->
@@ -51,13 +52,27 @@
 <body>
 
   <!-- HERO / BANNER -->
-  <header class="hero">
+  <header class="hero" style="padding:60px 0 30px; text-align:center;">
     <div class="hero-inner">
-      <div class="hero-logo">
-        <img src="logo-ai.png" alt="Logo IA" />
-        <h1 class="hero-title">IA Orçamentista</h1>
+      <div class="hero-logo" style="display:flex; flex-direction:column; align-items:center; gap:18px;">
+        <img src="logo-ai.png" alt="Logo IA" style="max-width:140px; filter:drop-shadow(0 0 12px rgba(0,200,255,.5));" />
+        <h1 class="hero-title" style="
+          font-family:'Orbitron',Inter,system-ui,sans-serif;
+          font-size:2.2rem; 
+          font-weight:800; 
+          background:linear-gradient(90deg,#00f0ff,#007bff,#00ffb7);
+          -webkit-background-clip:text;
+          background-clip:text;
+          color:transparent;
+          text-shadow:0 0 8px rgba(0,200,255,.4);
+          letter-spacing:1px;
+        ">
+          IA Orçamentista
+        </h1>
       </div>
-      <p class="hero-subtitle">Inteligência Artificial para cálculos e orçamentos</p>
+      <p class="hero-subtitle" style="margin-top:10px; font-size:1rem; color:#94a3b8;">
+        Inteligência Artificial para cálculos e orçamentos
+      </p>
 
       <!-- badge de sessão -->
       <div class="account">
