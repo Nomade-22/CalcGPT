@@ -24,7 +24,7 @@ body{
   position:relative;
   background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 40%, var(--bg-3) 100%);
   border-bottom:2px solid var(--blue);
-  padding:80px 20px 60px;   /* mais espaço */
+  padding:60px 20px 48px;
   text-align:center;
   overflow:hidden;
 }
@@ -40,28 +40,29 @@ body{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:20px; /* espaço entre logo e título */
+  gap:18px;
 }
 
-.hero-logo img{
-  width:160px;
-  height:auto;
-  object-fit:contain;
-  filter: drop-shadow(0 0 18px rgba(37,99,235,.55));
+.logo-img {
+  width: 180px;
+  height: 180px;
+  background: url("logo-ai.png") center/contain no-repeat;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 14px rgba(37,99,235,.55));
 }
 
 .hero-title{
-  margin:0;
-  font-size:3rem;
-  font-weight:800;
-  letter-spacing:1.5px;
+  margin-top: 18px;
+  font-size:2.8rem;
+  font-weight:700;
+  letter-spacing:1.2px;
   color:#fff;
-  text-shadow:0 0 20px rgba(37,99,235,.7);
+  text-shadow:0 0 18px rgba(37,99,235,.55);
 }
 
 .hero-subtitle{
-  margin:16px 0 0 0;
-  font-size:1.2rem;
+  margin:12px 0 0 0;
+  font-size:1.1rem;
   color:var(--muted);
 }
 
@@ -70,13 +71,13 @@ body{
   position:absolute;
   inset:-40% -10% auto -10%;
   height:120%;
-  background: radial-gradient(60% 60% at 50% 40%, rgba(37,99,235,.18), rgba(37,99,235,.08), transparent 70%);
+  background: radial-gradient(60% 60% at 50% 40%, rgba(37,99,235,.16), rgba(37,99,235,.05), transparent 70%);
   animation:heroPulse 7s infinite ease-in-out;
 }
 
 @keyframes heroPulse{
   0%{transform:scale(1);opacity:1}
-  50%{transform:scale(1.15);opacity:.7}
+  50%{transform:scale(1.12);opacity:.75}
   100%{transform:scale(1);opacity:1}
 }
 
@@ -159,8 +160,8 @@ footer{
 }
 
 .social-links a{
-  color:#fff;         /* branco fixo */
-  font-size:3.2rem;   /* bem grandes */
+  color:#fff;         
+  font-size:3.2rem;   
   text-decoration:none;
 }
 
@@ -173,9 +174,9 @@ footer{
 
 /* ===== Responsivo ===== */
 @media (max-width: 768px){
-  .hero{ padding:60px 16px 44px }
-  .hero-logo img{ width:130px }
-  .hero-title{ font-size:2.4rem }
+  .hero{ padding:44px 16px 36px }
+  .logo-img{ width:120px; height:120px; }
+  .hero-title{ font-size:2.2rem }
   #chat{ margin:18px 12px 28px; padding:16px }
   #messages{ height:360px }
   .social-links{ gap:28px }
