@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin – IA Orçamentista</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root { color-scheme: dark; }
+  body{font-family:Inter,system-ui; margin:20px; background:#0b0f1a; color:#fff}
+  h1{font-size:1.25rem; margin:0 0 12px}
+  .card{border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:16px; margin:0 0 18px; background:#0f1424}
+  input,select,button{padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0f1424; color:#fff; outline:none}
+  button{background:#2563eb; border:0; cursor:pointer}
+  table{width:100%; border-collapse:collapse; margin-top:12px}
+  th,td{border-bottom:1px solid rgba(255,255,255,.08); padding:8px; font-size:.95rem}
+  .row{display:flex; gap:10px; flex-wrap:wrap; margin:8px 0}
+  .row > *{flex:1}
+  small{opacity:.75}
+</style>
+</head>
+<body>
+  <h1>Admin – IA Orçamentista</h1>
+
+  <div class="card">
+    <div class="row">
+      <input id="secret" type="password" placeholder="ADMIN_SECRET" />
+      <input id="backend" type="text" placeholder="Backend URL" value="https://orcamentistabeckend.onrender.com" />
+      <button onclick="loadState()">Conectar</button>
+    </div>
+    <small>Defina o <b>ADMIN_SECRET</b> no Render (variável de ambiente) e use-o aqui.</small>
+  </div>
+
+  <div class="card">
+    <h2>Planos</h2>
+    <div class="row">
+      <input id="plan-name" placeholder="nome do plano (ex.: pro-plus)" />
+      <input id="plan-msgs" type="number" placeholder="limite/mês (ex.: 75000)" />
+      <input id="plan-price" placeholder="preço (ex.: R$99,90/mês)" />
+      <button onclick="savePlan()">Salvar/Atualizar Plano</button>
+    </div>
+    <div id="plans"></div>
+  </div>
+
+  <div class="card">
+    <h2>Usuários</h2>
+    <div class="row">
+      <input id="user-token" placeholder="token (nome-sobrenome)" />
+      <input id="user-plan" placeholder="plano (free/basico/pro ou novo)" />
+      <button onclick="saveUser()">Salvar/Atualizar Usuário</button>
+    </div>
+    <div class="row">
+      <input id="old-token" placeholder="token antigo" />
+      <input id="new-token" placeholder="novo token" />
+      <button onclick="renameUser()">Renomear Usuário</button>
+    </div>
+    <div id="users"></div>
+  </div>
+
+<script>
+let SECRET = "";
+let BASE = "";
+
+async function api(path, method="GET", body=null) {
+  const resp = await fetch(`${BASE}${path}`, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      "X-Admin-Secret": SECRET
+    },
+    body: body ? JSON.stringify(body) : null
+  });
+  const txt = await resp.text();
+  let data = null; try{ data = JSON.parse(txt) }catch{}
+  if (!resp.ok) throw new Error(data?.error || txt || "Erro na API");
+  return data;
+}
+
+async function loadState() {
+  SECRET = document.getElementById("secret").value.trim();
+  BASE = document.getElementById("backend").value.trim().replace(/\/$/,"");
+  if (!SECRET || !BASE) { alert("Informe SECRET e Backend."); return; }
+
+  try{
+    const st = await api("/admin/state");
+    renderPlans(st.plans);
+    renderUsers(st.users);
+  }catch(e){ alert(e.message); }
+}
+
+function renderPlans(plans) {
+  const el = document.getElementById("plans");
+  const rows = Object.entries(plans).map(([name,p]) => `
+    <tr>
+      <td><b>${name}</b></td>
+      <td>${p.monthlyMessages}</td>
+      <td>${p.price}</td>
+      <td><button onclick="deletePlan('${name}')">Excluir</button></td>
+    </tr>
+  `).join("");
+  el.innerHTML = `
+    <table>
+      <thead><tr><th>Plano</th><th>Limite/mês</th><th>Preço</th><th></th></tr></thead>
+      <tbody>${rows || "<tr><td colspan='4'>Sem planos</td></tr>"}</tbody>
+    </table>
+  `;
+}
+
+function renderUsers(users) {
+  const el = document.getElementById("users");
+  const rows = Object.entries(users).map(([token,plan]) => `
+    <tr>
+      <td><b>${token}</b></td>
+      <td>${plan}</td>
+      <td>
+        <button onclick="deleteUser('${token}')">Excluir</button>
+      </td>
+    </tr>
+  `).join("");
+  el.innerHTML = `
+    <table>
+      <thead><tr><th>Token</th><th>Plano</th><th></th></tr></thead>
+      <tbody>${rows || "<tr><td colspan='3'>Sem usuários</td></tr>"}</tbody>
+    </table>
+  `;
+}
+
+async function savePlan() {
+  try{
+    const name = document.getElementById("plan-name").value.trim();
+    const monthlyMessages = Number(document.getElementById("plan-msgs").value);
+    const price = document.getElementById("plan-price").value.trim();
+    if (!name || !monthlyMessages || !price) return alert("Preencha nome, limite e preço.");
+    const data = await api("/admin/plan", "POST", { name, monthlyMessages, price });
+    renderPlans(data.plans);
+    alert("Plano salvo!");
+  }catch(e){ alert(e.message); }
+}
+
+async function deletePlan(name) {
+  if (!confirm(`Excluir plano ${name}?`)) return;
+  try{
+    const data = await api(`/admin/plan/${encodeURIComponent(name)}`, "DELETE");
+    renderPlans(data.plans);
+  }catch(e){ alert(e.message); }
+}
+
+async function saveUser() {
+  try{
+    const token = document.getElementById("user-token").value.trim();
+    const plan = document.getElementById("user-plan").value.trim();
+    if (!token || !plan) return alert("Preencha token e plano.");
+    const data = await api("/admin/user", "POST", { token, plan });
+    renderUsers(data.users);
+    alert("Usuário salvo!");
+  }catch(e){ alert(e.message); }
+}
+
+async function deleteUser(token) {
+  if (!confirm(`Excluir usuário ${token}?`)) return;
+  try{
+    const data = await api(`/admin/user/${encodeURIComponent(token)}`, "DELETE");
+    renderUsers(data.users);
+  }catch(e){ alert(e.message); }
+}
+
+async function renameUser() {
+  try{
+    const oldToken = document.getElementById("old-token").value.trim();
+    const newToken = document.getElementById("new-token").value.trim();
+    if (!oldToken || !newToken) return alert("Preencha token antigo e novo.");
+    const data = await api("/admin/user/rename", "POST", { oldToken, newToken });
+    renderUsers(data.users);
+    alert("Usuário renomeado!");
+  }catch(e){ alert(e.message); }
+}
+</script>
+</body>
+</html>
