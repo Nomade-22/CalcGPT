@@ -24,7 +24,7 @@ body{
   position:relative;
   background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 40%, var(--bg-3) 100%);
   border-bottom:2px solid var(--blue);
-  padding:60px 20px 48px;
+  padding:72px 20px 52px;      /* +respiro no topo */
   text-align:center;
   overflow:hidden;
 }
@@ -44,25 +44,36 @@ body{
 }
 
 .hero-logo img{
-  width:140px;
+  width:150px;                 /* um pouco maior */
   height:auto;
   object-fit:contain;
-  filter: drop-shadow(0 0 14px rgba(37,99,235,.45));
+  filter:
+    drop-shadow(0 0 12px rgba(37,99,235,.45))
+    drop-shadow(0 12px 40px rgba(0, 200, 255, .15));  /* glow ciborg */
 }
 
+/* título “ciborg” com gradiente neon */
 .hero-title{
   margin:0;
-  font-size:2.8rem;
-  font-weight:700;
-  letter-spacing:1.2px;
-  color:#fff;
-  text-shadow:0 0 18px rgba(37,99,235,.55);
+  font-family: 'Orbitron', Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: clamp(26px, 6.2vw, 42px);
+  font-weight:800;
+  letter-spacing:1.1px;
+  line-height:1.1;
+  background: linear-gradient(90deg, #00F0FF 0%, #2DD4BF 35%, #3B82F6 70%, #E5F2FF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow:
+    0 0 10px rgba(0, 200, 255, .30),
+    0 0 24px rgba(59, 130, 246, .20);
 }
 
 .hero-subtitle{
   margin:12px 0 0 0;
-  font-size:1.1rem;
+  font-size:1.05rem;
   color:var(--muted);
+  opacity:.95;
 }
 
 .hero-glow{
@@ -70,13 +81,15 @@ body{
   position:absolute;
   inset:-40% -10% auto -10%;
   height:120%;
-  background: radial-gradient(60% 60% at 50% 40%, rgba(37,99,235,.16), rgba(37,99,235,.05), transparent 70%);
+  background:
+    radial-gradient(60% 60% at 50% 40%, rgba(37,99,235,.18), rgba(37,99,235,.06), transparent 70%),
+    linear-gradient(90deg, transparent 0 10%, rgba(59,130,246,.35) 50%, transparent 90% 100%);
   animation:heroPulse 7s infinite ease-in-out;
 }
 
 @keyframes heroPulse{
   0%{transform:scale(1);opacity:1}
-  50%{transform:scale(1.12);opacity:.75}
+  50%{transform:scale(1.08);opacity:.8}
   100%{transform:scale(1);opacity:1}
 }
 
@@ -173,9 +186,9 @@ footer{
 
 /* ===== Responsivo ===== */
 @media (max-width: 768px){
-  .hero{ padding:44px 16px 36px }
-  .hero-logo img{ width:120px }
-  .hero-title{ font-size:2.2rem }
+  .hero{ padding:56px 16px 40px }
+  .hero-logo img{ width:130px }
+  .hero-title{ font-size: clamp(22px, 6.5vw, 32px) }
   #chat{ margin:18px 12px 28px; padding:16px }
   #messages{ height:360px }
   .social-links{ gap:28px }
