@@ -22,11 +22,12 @@ body{
 /* ===== HERO FUTURISTA (logo acima + título abaixo) ===== */
 .hero{
   position:relative;
+  z-index: 2;                      /* hero acima do chat */
   background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 40%, var(--bg-3) 100%);
   border-bottom:2px solid var(--blue);
-  padding:72px 20px 52px;      /* +respiro no topo */
+  padding:72px 20px 72px;          /* mais respiro embaixo */
   text-align:center;
-  overflow:hidden;
+  overflow:visible;                /* glow não cortado */
 }
 
 .hero-inner{
@@ -44,15 +45,14 @@ body{
 }
 
 .hero-logo img{
-  width:150px;                 /* um pouco maior */
+  width:150px;
   height:auto;
   object-fit:contain;
   filter:
     drop-shadow(0 0 12px rgba(37,99,235,.45))
-    drop-shadow(0 12px 40px rgba(0, 200, 255, .15));  /* glow ciborg */
+    drop-shadow(0 12px 40px rgba(0, 200, 255, .15));
 }
 
-/* título “ciborg” com gradiente neon */
 .hero-title{
   margin:0;
   font-family: 'Orbitron', Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -96,9 +96,11 @@ body{
 /* ===== CHAT CARD ===== */
 #chat{
   flex:1;
+  position: relative;
+  z-index: 1;                      /* abaixo do hero */
   max-width:900px;
   width:100%;
-  margin:24px auto 32px;
+  margin:0 auto 32px;              /* sem margem em cima */
   padding:20px;
   background: var(--bg-3);
   border:1px solid #22314a;
@@ -172,8 +174,8 @@ footer{
 }
 
 .social-links a{
-  color:#fff;         /* branco fixo */
-  font-size:3.2rem;   /* bem grandes */
+  color:#fff;
+  font-size:3.2rem;
   text-decoration:none;
 }
 
@@ -186,10 +188,10 @@ footer{
 
 /* ===== Responsivo ===== */
 @media (max-width: 768px){
-  .hero{ padding:56px 16px 40px }
+  .hero{ padding:56px 16px 56px }
   .hero-logo img{ width:130px }
   .hero-title{ font-size: clamp(22px, 6.5vw, 32px) }
-  #chat{ margin:18px 12px 28px; padding:16px }
+  #chat{ margin:0 12px 28px; padding:16px }
   #messages{ height:360px }
   .social-links{ gap:28px }
   .social-links .divider{ height:42px }
