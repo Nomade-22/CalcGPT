@@ -8,20 +8,27 @@
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Fallback crítico só para o modal (garante overlay mesmo se o style.css falhar) -->
+  <style>
+    .login-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:99999}
+  </style>
 </head>
 <body>
 
-  <!-- HERO / BANNER -->
+  <!-- HERO -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-logo">
-        <!-- Se você já tem o banner horizontal, use ele -->
-        <img src="banner-ia.png" alt="IA Orçamentista" />
+        <!-- banner horizontal; cai para logo-ai.png se o banner não existir -->
+        <img class="hero-banner"
+             src="banner-ia-2560x820.png"
+             alt="IA Orçamentista"
+             onerror="this.onerror=null;this.src='logo-ai.png';" />
         <h1 class="hero-title">IA Orçamentista</h1>
       </div>
       <p class="hero-subtitle">Inteligência Artificial para cálculos e orçamentos</p>
 
-      <!-- badge de sessão -->
       <div class="account">
         <span id="session-badge" class="badge" style="display:none;">
           <span class="dot"></span>
@@ -33,12 +40,12 @@
     <div class="hero-glow"></div>
   </header>
 
-  <!-- ÁREA DO CHAT -->
+  <!-- CHAT -->
   <main id="chat">
     <div id="messages"></div>
     <div class="input-area">
       <input id="input" type="text" placeholder="Digite sua pergunta..." />
-      <button onclick="sendMessage()">Enviar</button>
+      <button id="send-btn">Enviar</button>
     </div>
   </main>
 
@@ -65,11 +72,11 @@
         <input id="token-input" type="text" placeholder="ex.: joao-silva" />
         <button id="login-btn">Entrar</button>
       </div>
-      <div style="margin-top: 14px; text-align:center;">
+      <div style="margin-top:14px;text-align:center;">
         <a href="vendas.html" class="btn-precos" style="
-          display:inline-block; padding:10px 14px; border-radius:10px;
-          border:1px solid rgba(255,255,255,.12); background:#2563eb; color:#fff;
-          font-weight:700; text-decoration:none;">
+          display:inline-block;padding:10px 14px;border-radius:10px;
+          border:1px solid rgba(255,255,255,.12);background:#2563eb;color:#fff;
+          font-weight:700;text-decoration:none;">
           <i class="fa-solid fa-bolt"></i> Planos e Preços
         </a>
       </div>
