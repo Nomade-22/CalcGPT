@@ -1,103 +1,99 @@
-// === CONFIG ===
+// ===== CONFIG =====
 const BACKEND_URL = "https://orcamentistabeckend.onrender.com/chat";
-const ME_URL = "https://orcamentistabeckend.onrender.com/me";
 
-let CLIENT_TOKEN = null; // será lido do localStorage ou do login
-
-// util: salvar/ler token
-function setToken(t) {
-  CLIENT_TOKEN = (t || "").trim();
-  if (CLIENT_TOKEN) localStorage.setItem("client_token", CLIENT_TOKEN);
-}
-function getSavedToken() {
-  return localStorage.getItem("client_token") || "";
-}
-
-// UI helpers
-function showTyping(messages) {
+// ===== UI helpers =====
+function showTyping(messagesEl) {
   const el = document.createElement("div");
   el.className = "msg bot";
   el.innerText = "Digitando…";
-  messages.appendChild(el);
+  messagesEl.appendChild(el);
   return el;
 }
-function appendBot(text) {
-  const messages = document.getElementById("messages");
-  const botMsg = document.createElement("div");
-  botMsg.className = "msg bot";
-  botMsg.innerText = text;
-  messages.appendChild(botMsg);
-  messages.scrollTop = messages.scrollHeight;
-}
-function appendUser(text) {
-  const messages = document.getElementById("messages");
-  const userMsg = document.createElement("div");
-  userMsg.className = "msg user";
-  userMsg.innerText = text;
-  messages.appendChild(userMsg);
-  messages.scrollTop = messages.scrollHeight;
+
+function appendMsg(messagesEl, who, text) {
+  const div = document.createElement("div");
+  div.className = `msg ${who}`;
+  div.innerText = text;
+  messagesEl.appendChild(div);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
 }
 
-// Login overlay
-function toggleLogin(show) {
-  const overlay = document.getElementById("login-overlay");
-  overlay.style.display = show ? "flex" : "none";
+// ===== LOGIN overlay =====
+const overlay = document.getElementById("login-overlay");
+const loginBtn = document.getElementById("login-btn");
+const logoutBtn = document.getElementById("logout-btn");
+const tokenInput = document.getElementById("token-input");
+const sessionBadge = document.getElementById("session-badge");
+const sessionLabel = document.getElementById("session-label");
+
+function showLogin() {
+  document.body.classList.add("show-login");
+  overlay.style.display = "flex";
+  tokenInput && tokenInput.focus();
 }
-async function afterLoginUI() {
-  // badge + botão sair
-  const badge = document.getElementById("session-badge");
-  const label = document.getElementById("session-label");
-  const logout = document.getElementById("logout-btn");
-  if (CLIENT_TOKEN) {
-    badge.style.display = "inline-flex";
-    label.textContent = `Conectado: ${CLIENT_TOKEN}`;
-    logout.style.display = "inline-block";
+function hideLogin() {
+  overlay.style.display = "none";
+  document.body.classList.remove("show-login");
+}
+
+function updateSessionUI() {
+  const tok = localStorage.getItem("clientToken");
+  if (tok) {
+    sessionBadge.style.display = "inline-flex";
+    sessionLabel.textContent = tok;
+    logoutBtn.style.display = "inline-block";
   } else {
-    badge.style.display = "none";
-    logout.style.display = "none";
+    sessionBadge.style.display = "none";
+    logoutBtn.style.display = "none";
   }
-
-  // opcional: mostrar status do plano
-  try {
-    const r = await fetch(ME_URL, {
-      headers: { "X-Client-Token": CLIENT_TOKEN }
-    });
-    if (r.ok) {
-      const me = await r.json();
-      appendBot(`Bem-vindo, ${CLIENT_TOKEN} — Plano: ${me.plan} (${me.price}). Uso: ${me.used}/${me.monthlyLimit} no mês.`);
-    }
-  } catch {}
 }
 
-// Enviar mensagem
-async function sendMessage() {
-  if (!CLIENT_TOKEN) {
-    toggleLogin(true);
-    return;
-  }
+window.addEventListener("load", () => {
+  const tok = localStorage.getItem("clientToken");
+  if (!tok) showLogin();
+  updateSessionUI();
+});
 
-  const input = document.getElementById("input");
+loginBtn?.addEventListener("click", () => {
+  const v = (tokenInput.value || "").trim().toLowerCase();
+  if (!v) { alert("Informe seu token."); return; }
+  localStorage.setItem("clientToken", v);
+  hideLogin();
+  updateSessionUI();
+});
+
+logoutBtn?.addEventListener("click", () => {
+  localStorage.removeItem("clientToken");
+  showLogin();
+  updateSessionUI();
+});
+
+// ===== CHAT =====
+async function sendMessage() {
   const messages = document.getElementById("messages");
+  const input = document.getElementById("input");
   const text = (input.value || "").trim();
   if (!text) return;
 
-  appendUser(text);
+  const clientToken = localStorage.getItem("clientToken");
+  if (!clientToken) { showLogin(); return; }
+
+  appendMsg(messages, "user", text);
   const typing = showTyping(messages);
 
   try {
     const ctrl = new AbortController();
-    const id = setTimeout(() => ctrl.abort(), 90000);
+    const id = setTimeout(() => ctrl.abort(), 75000);
 
     const resp = await fetch(BACKEND_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-Client-Token": CLIENT_TOKEN
+        "X-Client-Token": clientToken
       },
       body: JSON.stringify({ message: text }),
       signal: ctrl.signal
     });
-
     clearTimeout(id);
 
     const body = await resp.text();
@@ -107,73 +103,26 @@ async function sendMessage() {
     typing.remove();
 
     if (!resp.ok) {
-      let msg = data?.error || body || "Erro desconhecido do servidor.";
-      if (resp.status === 401) msg = "Faltou o token do cliente.";
-      if (resp.status === 403) msg = "Token inválido ou não cadastrado.";
-      if (resp.status === 429) msg = `Limite do plano atingido: ${data?.used}/${data?.limit} (${data?.plan}).`;
-      appendBot(`⚠️ Erro ${resp.status}: ${msg}`);
-      console.error("Backend error:", resp.status, msg);
+      const errText = (data?.error || body || "Erro desconhecido do servidor.");
+      appendMsg(messages, "bot", `⚠️ Erro ${resp.status}: ${errText}`);
+      console.error("Backend error:", resp.status, errText);
       return;
     }
 
     const reply = data?.reply || "Sem resposta do servidor.";
-    const usage = data?.usage;
-    appendBot(
-      usage
-        ? `${reply}\n\n— Plano: ${usage.plan} | Uso: ${usage.used}/${usage.limit} mês`
-        : reply
-    );
+    appendMsg(messages, "bot", reply);
+
   } catch (err) {
     typing.remove();
-    if (err.name === "AbortError") {
-      appendBot("⏳ Servidor iniciando… tente novamente agora.");
-    } else {
-      appendBot("⚠️ Erro de rede/CORS. Tente novamente em alguns segundos.");
-    }
+    appendMsg(messages, "bot", "⚠️ Erro de rede/CORS. Tente novamente em alguns segundos.");
     console.error("Falha de rede:", err);
   }
 
   input.value = "";
 }
 
-// Inicialização
-document.addEventListener("DOMContentLoaded", () => {
-  // token salvo?
-  const saved = getSavedToken();
-  if (saved) {
-    setToken(saved);
-    toggleLogin(false);
-    afterLoginUI();
-  } else {
-    toggleLogin(true);
-  }
-
-  // botões login / logout
-  const loginBtn = document.getElementById("login-btn");
-  const tokenInput = document.getElementById("token-input");
-  const logoutBtn = document.getElementById("logout-btn");
-
-  loginBtn?.addEventListener("click", async () => {
-    const t = tokenInput.value.trim();
-    if (!t) return;
-    setToken(t);
-    toggleLogin(false);
-    afterLoginUI();
-  });
-
-  logoutBtn?.addEventListener("click", () => {
-    localStorage.removeItem("client_token");
-    setToken(null);
-    appendBot("Sessão encerrada. Faça login novamente para continuar.");
-    toggleLogin(true);
-  });
-
-  // Enter envia
-  const input = document.getElementById("input");
-  input?.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  });
+// botão e Enter
+document.getElementById("send-btn")?.addEventListener("click", sendMessage);
+document.getElementById("input")?.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") sendMessage();
 });
