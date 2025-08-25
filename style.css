@@ -22,12 +22,11 @@ body{
 /* ===== HERO FUTURISTA (logo acima + título abaixo) ===== */
 .hero{
   position:relative;
-  z-index: 2;                      /* hero acima do chat */
   background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 40%, var(--bg-3) 100%);
   border-bottom:2px solid var(--blue);
-  padding:72px 20px 72px;          /* mais respiro embaixo */
+  padding:80px 20px 60px;   /* mais espaço */
   text-align:center;
-  overflow:visible;                /* glow não cortado */
+  overflow:hidden;
 }
 
 .hero-inner{
@@ -41,39 +40,29 @@ body{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:18px;
+  gap:20px; /* espaço entre logo e título */
 }
 
 .hero-logo img{
-  width:150px;
+  width:160px;
   height:auto;
   object-fit:contain;
-  filter:
-    drop-shadow(0 0 12px rgba(37,99,235,.45))
-    drop-shadow(0 12px 40px rgba(0, 200, 255, .15));
+  filter: drop-shadow(0 0 18px rgba(37,99,235,.55));
 }
 
 .hero-title{
   margin:0;
-  font-family: 'Orbitron', Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  font-size: clamp(26px, 6.2vw, 42px);
+  font-size:3rem;
   font-weight:800;
-  letter-spacing:1.1px;
-  line-height:1.1;
-  background: linear-gradient(90deg, #00F0FF 0%, #2DD4BF 35%, #3B82F6 70%, #E5F2FF 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow:
-    0 0 10px rgba(0, 200, 255, .30),
-    0 0 24px rgba(59, 130, 246, .20);
+  letter-spacing:1.5px;
+  color:#fff;
+  text-shadow:0 0 20px rgba(37,99,235,.7);
 }
 
 .hero-subtitle{
-  margin:12px 0 0 0;
-  font-size:1.05rem;
+  margin:16px 0 0 0;
+  font-size:1.2rem;
   color:var(--muted);
-  opacity:.95;
 }
 
 .hero-glow{
@@ -81,26 +70,22 @@ body{
   position:absolute;
   inset:-40% -10% auto -10%;
   height:120%;
-  background:
-    radial-gradient(60% 60% at 50% 40%, rgba(37,99,235,.18), rgba(37,99,235,.06), transparent 70%),
-    linear-gradient(90deg, transparent 0 10%, rgba(59,130,246,.35) 50%, transparent 90% 100%);
+  background: radial-gradient(60% 60% at 50% 40%, rgba(37,99,235,.18), rgba(37,99,235,.08), transparent 70%);
   animation:heroPulse 7s infinite ease-in-out;
 }
 
 @keyframes heroPulse{
   0%{transform:scale(1);opacity:1}
-  50%{transform:scale(1.08);opacity:.8}
+  50%{transform:scale(1.15);opacity:.7}
   100%{transform:scale(1);opacity:1}
 }
 
 /* ===== CHAT CARD ===== */
 #chat{
   flex:1;
-  position: relative;
-  z-index: 1;                      /* abaixo do hero */
   max-width:900px;
   width:100%;
-  margin:0 auto 32px;              /* sem margem em cima */
+  margin:24px auto 32px;
   padding:20px;
   background: var(--bg-3);
   border:1px solid #22314a;
@@ -174,8 +159,8 @@ footer{
 }
 
 .social-links a{
-  color:#fff;
-  font-size:3.2rem;
+  color:#fff;         /* branco fixo */
+  font-size:3.2rem;   /* bem grandes */
   text-decoration:none;
 }
 
@@ -188,10 +173,10 @@ footer{
 
 /* ===== Responsivo ===== */
 @media (max-width: 768px){
-  .hero{ padding:56px 16px 56px }
+  .hero{ padding:60px 16px 44px }
   .hero-logo img{ width:130px }
-  .hero-title{ font-size: clamp(22px, 6.5vw, 32px) }
-  #chat{ margin:0 12px 28px; padding:16px }
+  .hero-title{ font-size:2.4rem }
+  #chat{ margin:18px 12px 28px; padding:16px }
   #messages{ height:360px }
   .social-links{ gap:28px }
   .social-links .divider{ height:42px }
