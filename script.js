@@ -72,3 +72,16 @@ async function sendMessage() {
   input.value = "";
   messages.scrollTop = messages.scrollHeight;
 }
+
+const BACKEND_URL = "https://orcamentistabeckend.onrender.com/chat";
+const CLIENT_TOKEN = "tok-joao-123"; // defina um token por cliente
+
+// ...dentro do fetch:
+const resp = await fetch(BACKEND_URL, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "X-Client-Token": CLIENT_TOKEN
+  },
+  body: JSON.stringify({ message: text })
+});
