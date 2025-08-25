@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>IA Orçamentista</title>
 
-  <link rel="stylesheet" href="style.css" />
+  <!-- Força o navegador a buscar a versão nova do CSS -->
+  <link rel="stylesheet" href="style.css?v=4" />
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-  <!-- Estilos mínimos do modal (para não mexer no style.css) -->
+  <!-- Estilos mínimos do modal (seus originais) -->
   <style>
     .login-overlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.6);
@@ -37,42 +38,30 @@
       border:1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color:#fff;
       font: 600 .85rem/1 Inter,system-ui;
     }
-    .badge .dot {
-      width:8px; height:8px; border-radius:999px; background:#22c55e;
-    }
-    .account {
-      display:flex; gap:10px; align-items:center; justify-content:center; margin-top:8px;
-    }
+    .badge .dot { width:8px; height:8px; border-radius:999px; background:#22c55e; }
+    .account { display:flex; gap:10px; align-items:center; justify-content:center; margin-top:8px; }
     .account button {
       background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.12);
       padding:6px 10px; border-radius:10px; cursor:pointer; font: 600 .85rem Inter,system-ui;
     }
+
+    /* OVERRIDES TEMPORÁRIOS (garante que o banner apareça) */
+    .hero{ padding:100px 20px 120px !important; z-index:2 !important; }
+    .hero-logo img{ width:160px !important; }
+    .hero-title{ font-size:48px !important; }
+    #chat{ margin:32px auto 40px !important; position:relative; z-index:1 !important; }
   </style>
 </head>
 <body>
 
   <!-- HERO / BANNER -->
-  <header class="hero" style="padding:60px 0 30px; text-align:center;">
+  <header class="hero">
     <div class="hero-inner">
-      <div class="hero-logo" style="display:flex; flex-direction:column; align-items:center; gap:18px;">
-        <img src="logo-ai.png" alt="Logo IA" style="max-width:140px; filter:drop-shadow(0 0 12px rgba(0,200,255,.5));" />
-        <h1 class="hero-title" style="
-          font-family:'Orbitron',Inter,system-ui,sans-serif;
-          font-size:2.2rem; 
-          font-weight:800; 
-          background:linear-gradient(90deg,#00f0ff,#007bff,#00ffb7);
-          -webkit-background-clip:text;
-          background-clip:text;
-          color:transparent;
-          text-shadow:0 0 8px rgba(0,200,255,.4);
-          letter-spacing:1px;
-        ">
-          IA Orçamentista
-        </h1>
+      <div class="hero-logo">
+        <img src="logo-ai.png" alt="Logo IA" />
+        <h1 class="hero-title">IA Orçamentista</h1>
       </div>
-      <p class="hero-subtitle" style="margin-top:10px; font-size:1rem; color:#94a3b8;">
-        Inteligência Artificial para cálculos e orçamentos
-      </p>
+      <p class="hero-subtitle">Inteligência Artificial para cálculos e orçamentos</p>
 
       <!-- badge de sessão -->
       <div class="account">
@@ -98,7 +87,6 @@
   <!-- RODAPÉ -->
   <footer>
     <p>© 2025 · Powered by AI</p>
-
     <div class="social-links">
       <a href="https://www.instagram.com/v2j_digital?igsh=M282NmswNnc1Y3Uw" target="_blank" rel="noopener" aria-label="Instagram">
         <i class="fab fa-instagram"></i>
@@ -120,7 +108,6 @@
         <button id="login-btn">Entrar</button>
       </div>
 
-      <!-- Botão Planos e Preços -->
       <div style="margin-top: 14px; text-align:center;">
         <a href="vendas.html" class="btn-precos" style="
           display:inline-block; padding:10px 14px; border-radius:10px;
