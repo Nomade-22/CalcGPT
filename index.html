@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-  <!-- Estilos mínimos do modal (mantidos aqui para não mexer no style.css) -->
+  <!-- Estilos mínimos do modal -->
   <style>
     .login-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:9999}
     .login-card{width:min(92vw,420px);background:#0b0f1a;color:#fff;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
@@ -29,7 +29,6 @@
   <!-- BANNER -->
   <header class="hero">
     <div class="hero-inner">
-      <!-- IMPORTANTE: o arquivo do seu banner deve estar salvo como logo-ai.png no repositório -->
       <img src="logo-ai.png" alt="IA Orçamentista" class="hero-banner" />
     </div>
     <div class="hero-glow"></div>
@@ -40,7 +39,8 @@
     <div id="messages"></div>
     <div class="input-area">
       <input id="input" type="text" placeholder="Digite sua pergunta..." />
-      <button id="send-btn" type="button" onclick="sendMessage()">Enviar</button>
+      <!-- sem onclick aqui -->
+      <button id="send-btn" type="button">Enviar</button>
     </div>
   </main>
 
@@ -75,13 +75,7 @@
     </div>
   </div>
 
-  <!-- JS do app -->
+  <!-- JS -->
   <script src="script.js"></script>
-  <!-- Patch de segurança de eventos -->
-  <script>
-    // garante clique e Enter em todos navegadores
-    document.getElementById('send-btn')?.addEventListener('click', () => { if (window.sendMessage) sendMessage(); });
-    document.getElementById('input')?.addEventListener('keydown', (e) => { if (e.key === 'Enter' && window.sendMessage) sendMessage(); });
-  </script>
 </body>
 </html>
