@@ -40,29 +40,29 @@ body{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:18px;
+  gap:14px;
 }
 
 .logo-img {
-  width: 180px;
-  height: 180px;
+  width: 120px;   /* menor */
+  height: 120px;  /* menor */
   background: url("logo-ai.png") center/contain no-repeat;
   margin: 0 auto;
   filter: drop-shadow(0 0 14px rgba(37,99,235,.55));
 }
 
 .hero-title{
-  margin-top: 18px;
-  font-size:2.8rem;
-  font-weight:700;
-  letter-spacing:1.2px;
+  margin-top: 12px;
+  font-size:3.2rem;  /* maior */
+  font-weight:800;
+  letter-spacing:1.5px;
   color:#fff;
-  text-shadow:0 0 18px rgba(37,99,235,.55);
+  text-shadow:0 0 22px rgba(37,99,235,.65);
 }
 
 .hero-subtitle{
-  margin:12px 0 0 0;
-  font-size:1.1rem;
+  margin:10px 0 0 0;
+  font-size:1.15rem;
   color:var(--muted);
 }
 
@@ -143,7 +143,7 @@ body{
 }
 .input-area button:active{ transform: scale(.98) }
 
-/* ===== RODAPÉ + ÍCONES (brancos, grandes, com barra) ===== */
+/* ===== RODAPÉ ===== */
 footer{
   text-align:center;
   padding:20px;
@@ -160,8 +160,8 @@ footer{
 }
 
 .social-links a{
-  color:#fff;         
-  font-size:3.2rem;   
+  color:#fff;
+  font-size:3.2rem;
   text-decoration:none;
 }
 
@@ -175,8 +175,8 @@ footer{
 /* ===== Responsivo ===== */
 @media (max-width: 768px){
   .hero{ padding:44px 16px 36px }
-  .logo-img{ width:120px; height:120px; }
-  .hero-title{ font-size:2.2rem }
+  .logo-img{ width:100px; height:100px; }
+  .hero-title{ font-size:2.4rem }
   #chat{ margin:18px 12px 28px; padding:16px }
   #messages{ height:360px }
   .social-links{ gap:28px }
