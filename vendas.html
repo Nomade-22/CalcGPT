@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IA Orçamentista — Planos e Preços</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root { color-scheme: dark; --bg:#0b0f1a; --card:#0f1424; --muted:#94a3b8; --line:rgba(255,255,255,.08); --brand:#2563eb; --brand-2:#60a5fa; }
+    *{box-sizing:border-box} body{margin:0; font-family:Inter,system-ui,Segoe UI,Roboto; background:var(--bg); color:#fff}
+    a{color:inherit; text-decoration:none}
+    header{position:sticky; top:0; z-index:10; background:linear-gradient(180deg, rgba(11,15,26,.9), rgba(11,15,26,.6) 50%, rgba(11,15,26,0)); backdrop-filter: blur(8px); border-bottom:1px solid var(--line)}
+    .container{width:min(1100px,92vw); margin:0 auto}
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:12px 0}
+    .brand{display:flex; gap:10px; align-items:center}
+    .brand img{width:28px; height:28px; border-radius:8px}
+    .brand span{font-weight:800; letter-spacing:.2px}
+    .nav a.btn{padding:10px 14px; border:1px solid var(--line); border-radius:10px}
+    .nav a.cta{background:var(--brand); border-color:transparent; color:#fff}
+
+    .hero{padding:56px 0 24px; text-align:center}
+    .badge{display:inline-flex; gap:8px; align-items:center; border:1px solid var(--line); border-radius:999px; padding:6px 12px; color:#cbd5e1; font-weight:600}
+    .dot{width:8px; height:8px; border-radius:999px; background:#22c55e}
+    h1{font-size:clamp(28px,6vw,48px); margin:16px 0 10px; line-height:1.1}
+    .sub{color:var(--muted); font-size:clamp(14px,2.3vw,18px)}
+    .glow{position:absolute; inset:auto 0 0 0; height:120px; background:radial-gradient(60% 100% at 50% 100%, rgba(37,99,235,.25), transparent 60%)}
+
+    .grid{display:grid; gap:16px}
+    .features{margin:36px 0 8px}
+    @media(min-width:900px){ .features .grid{grid-template-columns:repeat(3,1fr)} }
+    .card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px}
+    .card h3{margin:0 0 6px}
+    .card p{margin:0; color:var(--muted)}
+    .icon{width:38px; height:38px; display:grid; place-items:center; border-radius:10px; background:rgba(96,165,250,.1); border:1px solid rgba(96,165,250,.25); color:#93c5fd}
+
+    .pricing{margin:26px 0 10px}
+    @media(min-width:900px){ .pricing .grid{grid-template-columns:repeat(3,1fr)} }
+    .plan{position:relative; padding:22px}
+    .plan h4{margin:0 0 6px; font-size:1.1rem}
+    .price{font-weight:800; font-size:28px; margin:4px 0 10px; background:linear-gradient(90deg,#fff,#93c5fd); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .muted{color:var(--muted); font-size:.95rem}
+    .ul{margin:12px 0 14px; padding:0; list-style:none; color:#e2e8f0}
+    .ul li{display:flex; gap:10px; align-items:flex-start; margin:8px 0}
+    .ul i{color:#22c55e; margin-top:2px}
+    .btn{display:inline-block; width:100%; text-align:center; padding:12px 14px; border-radius:12px; font-weight:700; border:1px solid var(--line); background:#141a2b; color:#fff}
+    .btn-primary{background:var(--brand); border-color:transparent}
+    .tag{position:absolute; top:14px; right:14px; font-size:.75rem; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.06)}
+
+    .faq{margin:36px 0 40px}
+    details{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px}
+    details+details{margin-top:10px}
+    summary{cursor:pointer; font-weight:700}
+    summary::-webkit-details-marker{display:none}
+    .footer{border-top:1px solid var(--line); padding:18px 0; display:flex; align-items:center; justify-content:space-between; color:var(--muted); gap:10px; flex-wrap:wrap}
+    .social a{display:inline-flex; width:38px; height:38px; align-items:center; justify-content:center; border:1px solid var(--line); border-radius:10px; color:#e2e8f0}
+    .divider{width:1px; height:20px; background:var(--line); margin:0 6px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="index.html">
+        <img src="logo-ai.png" alt="IA" />
+        <span>IA Orçamentista</span>
+      </a>
+      <div style="display:flex; gap:8px;">
+        <a class="btn" href="index.html"><i class="fa-solid fa-robot"></i>&nbsp; Abrir o App</a>
+        <a class="btn cta" href="#planos"><i class="fa-solid fa-bolt"></i>&nbsp; Começar agora</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <span class="badge"><span class="dot"></span> Especialista em cálculo e orçamento</span>
+      <h1>Orçamentos 5x mais rápidos, com respostas claras e em R$</h1>
+      <p class="sub">Chat de IA treinado para <b>cálculos e orçamentos</b>, respostas curtas e objetivas. Planos acessíveis para profissionais e empresas.</p>
+    </div>
+    <div class="glow"></div>
+  </section>
+
+  <section class="features">
+    <div class="container grid">
+      <div class="card">
+        <div class="icon"><i class="fa-solid fa-calculator"></i></div>
+        <h3>Foco em R$</h3>
+        <p>Resultados em reais, com objetividade. Menos texto, mais decisão.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><i class="fa-solid fa-gauge-high"></i></div>
+        <h3>Rápido e leve</h3>
+        <p>Respostas curtas (até 3 frases) e seguras — ideais para o dia a dia.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><i class="fa-solid fa-shield-check"></i></div>
+        <h3>Planos e limites</h3>
+        <p>Controle por usuário, com transparência e previsibilidade de custo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="planos" class="pricing">
+    <div class="container grid">
+      <!-- FREE -->
+      <div class="card plan">
+        <h4>Free</h4>
+        <div class="price">R$ 0,00<span class="muted"> / mês</span></div>
+        <p class="muted">Para conhecer o produto</p>
+        <ul class="ul">
+          <li><i class="fa-solid fa-check"></i> 500 mensagens/mês</li>
+          <li><i class="fa-solid fa-check"></i> Respostas curtas e objetivas</li>
+          <li><i class="fa-solid fa-check"></i> Acesso web</li>
+        </ul>
+        <a class="btn" href="https://sualoja.com/free" target="_blank" rel="noopener">Começar grátis</a>
+      </div>
+
+      <!-- BÁSICO -->
+      <div class="card plan" style="border-color:rgba(96,165,250,.45)">
+        <span class="tag">Mais popular</span>
+        <h4>Básico</h4>
+        <div class="price">R$ 19,90<span class="muted"> / mês</span></div>
+        <p class="muted">Profissionais e pequenos negócios</p>
+        <ul class="ul">
+          <li><i class="fa-solid fa-check"></i> 10.000 mensagens/mês</li>
+          <li><i class="fa-solid fa-check"></i> Prioridade no servidor</li>
+          <li><i class="fa-solid fa-check"></i> Suporte por e-mail</li>
+        </ul>
+        <a class="btn btn-primary" href="https://sualoja.com/basico" target="_blank" rel="noopener">Assinar Básico</a>
+      </div>
+
+      <!-- PRO -->
+      <div class="card plan">
+        <h4>Profissional</h4>
+        <div class="price">R$ 49,90<span class="muted"> / mês</span></div>
+        <p class="muted">Empresas e equipes</p>
+        <ul class="ul">
+          <li><i class="fa-solid fa-check"></i> 50.000 mensagens/mês</li>
+          <li><i class="fa-solid fa-check"></i> Suporte prioritário</li>
+          <li><i class="fa-solid fa-check"></i> Roadmap de recursos</li>
+        </ul>
+        <a class="btn" href="https://sualoja.com/pro" target="_blank" rel="noopener">Assinar Profissional</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <div class="container">
+      <div class="grid" style="grid-template-columns:1fr;">
+        <details open>
+          <summary>Como recebo meu acesso?</summary>
+          <p class="muted">Após a compra, você receberá um <b>token (nome-sobrenome)</b>. Use-o para entrar no app e começar a usar.</p>
+        </details>
+        <details>
+          <summary>O que acontece ao atingir o limite?</summary>
+          <p class="muted">O chat informa que o limite foi atingido e sugere upgrade de plano. Você pode contratar mais mensagens a qualquer momento.</p>
+        </details>
+        <details>
+          <summary>Posso cancelar quando quiser?</summary>
+          <p class="muted">Sim. Os planos são mensais e você pode cancelar a qualquer momento diretamente pela plataforma de pagamento.</p>
+        </details>
+        <details>
+          <summary>Minhas conversas são privadas?</summary>
+          <p class="muted">Sim. Cada conta usa um token individual e o uso é contabilizado apenas para o seu plano.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <div class="container footer">
+    <div>© 2025 · IA Orçamentista</div>
+    <div class="social" style="display:flex; align-items:center;">
+      <a href="https://www.instagram.com/v2j_digital?igsh=M282NmswNnc1Y3Uw" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <div class="divider"></div>
+      <a href="https://www.facebook.com/share/1Cedz1Kfds/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+    </div>
+  </div>
+</body>
+</html>
