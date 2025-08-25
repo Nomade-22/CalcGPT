@@ -1,85 +1,46 @@
-// ===== CONFIG =====
 const BACKEND_URL = "https://orcamentistabeckend.onrender.com/chat";
 
-// ===== UI helpers =====
-function showTyping(messagesEl) {
+let isSending = false; // evita envios duplicados
+
+// util
+function showTyping(messages) {
   const el = document.createElement("div");
   el.className = "msg bot";
   el.innerText = "Digitando…";
-  messagesEl.appendChild(el);
+  messages.appendChild(el);
   return el;
 }
-
-function appendMsg(messagesEl, who, text) {
+function appendMsg(messages, who, text) {
   const div = document.createElement("div");
   div.className = `msg ${who}`;
   div.innerText = text;
-  messagesEl.appendChild(div);
-  messagesEl.scrollTop = messagesEl.scrollHeight;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
 }
 
-// ===== LOGIN overlay =====
-const overlay = document.getElementById("login-overlay");
-const loginBtn = document.getElementById("login-btn");
-const logoutBtn = document.getElementById("logout-btn");
-const tokenInput = document.getElementById("token-input");
-const sessionBadge = document.getElementById("session-badge");
-const sessionLabel = document.getElementById("session-label");
-
-function showLogin() {
-  document.body.classList.add("show-login");
-  overlay.style.display = "flex";
-  tokenInput && tokenInput.focus();
-}
-function hideLogin() {
-  overlay.style.display = "none";
-  document.body.classList.remove("show-login");
-}
-
-function updateSessionUI() {
-  const tok = localStorage.getItem("clientToken");
-  if (tok) {
-    sessionBadge.style.display = "inline-flex";
-    sessionLabel.textContent = tok;
-    logoutBtn.style.display = "inline-block";
-  } else {
-    sessionBadge.style.display = "none";
-    logoutBtn.style.display = "none";
-  }
-}
-
-window.addEventListener("load", () => {
-  const tok = localStorage.getItem("clientToken");
-  if (!tok) showLogin();
-  updateSessionUI();
-});
-
-loginBtn?.addEventListener("click", () => {
-  const v = (tokenInput.value || "").trim().toLowerCase();
-  if (!v) { alert("Informe seu token."); return; }
-  localStorage.setItem("clientToken", v);
-  hideLogin();
-  updateSessionUI();
-});
-
-logoutBtn?.addEventListener("click", () => {
-  localStorage.removeItem("clientToken");
-  showLogin();
-  updateSessionUI();
-});
-
-// ===== CHAT =====
+// envio
 async function sendMessage() {
-  const messages = document.getElementById("messages");
+  if (isSending) return; // trava reentrância
   const input = document.getElementById("input");
+  const messages = document.getElementById("messages");
+  const btn = document.getElementById("send-btn");
+
   const text = (input.value || "").trim();
   if (!text) return;
 
+  // exige token
   const clientToken = localStorage.getItem("clientToken");
-  if (!clientToken) { showLogin(); return; }
+  if (!clientToken) {
+    const overlay = document.getElementById("login-overlay");
+    if (overlay) overlay.style.display = "flex";
+    return;
+  }
 
+  // UI
   appendMsg(messages, "user", text);
   const typing = showTyping(messages);
+  isSending = true;
+  btn.disabled = true;
 
   try {
     const ctrl = new AbortController();
@@ -106,23 +67,45 @@ async function sendMessage() {
       const errText = (data?.error || body || "Erro desconhecido do servidor.");
       appendMsg(messages, "bot", `⚠️ Erro ${resp.status}: ${errText}`);
       console.error("Backend error:", resp.status, errText);
-      return;
+    } else {
+      const reply = data?.reply || "Sem resposta do servidor.";
+      appendMsg(messages, "bot", reply);
     }
-
-    const reply = data?.reply || "Sem resposta do servidor.";
-    appendMsg(messages, "bot", reply);
-
   } catch (err) {
     typing.remove();
     appendMsg(messages, "bot", "⚠️ Erro de rede/CORS. Tente novamente em alguns segundos.");
     console.error("Falha de rede:", err);
+  } finally {
+    isSending = false;
+    btn.disabled = false;
+    input.value = "";
+    input.focus();
   }
-
-  input.value = "";
 }
 
-// botão e Enter
-document.getElementById("send-btn")?.addEventListener("click", sendMessage);
-document.getElementById("input")?.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") sendMessage();
+// listeners únicos
+window.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("send-btn");
+  const input = document.getElementById("input");
+  btn?.addEventListener("click", sendMessage);
+  input?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  // login overlay: abre se não houver token
+  const token = localStorage.getItem("clientToken");
+  const overlay = document.getElementById("login-overlay");
+  const loginBtn = document.getElementById("login-btn");
+  const tokenInput = document.getElementById("token-input");
+
+  if (!token && overlay) overlay.style.display = "flex";
+  loginBtn?.addEventListener("click", () => {
+    const v = (tokenInput?.value || "").trim();
+    if (!v) return;
+    localStorage.setItem("clientToken", v);
+    if (overlay) overlay.style.display = "none";
+  });
 });
