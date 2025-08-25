@@ -1,3 +1,6 @@
+/* =========================
+   Base / Tema
+========================= */
 :root{
   --bg-1:#0f172a;
   --bg-2:#111827;
@@ -18,48 +21,63 @@ body{
   flex-direction:column;
 }
 
-/* ===== HERO / BANNER (SEM CORTES) ===== */
+/* =========================
+   HERO / BANNER
+   - imagem sempre inteira (contain)
+   - alturas diferentes p/ desktop e mobile
+========================= */
 .hero{
   position:relative;
   background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 40%, var(--bg-3) 100%);
   border-bottom:2px solid var(--blue);
-  text-align:center;
   overflow:hidden;
-  z-index: 1;
-  padding: 0;                 /* sem padding para o banner encostar no topo */
+  text-align:center;
 }
+
 .hero-inner{
   position:relative;
-  z-index:2;
-  max-width: 1100px;          /* largura máxima do conteúdo */
-  margin: 0 auto;
-  padding: 0;                 /* sem padding interno */
+  z-index:1;
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 16px;
 }
 
-/* Mostra a imagem inteira (sem cortes), responsiva */
-.hero-banner{
-  display:block;
-  width: 100%;
-  height: auto;               /* mantém proporção sem cortar */
-  max-height: none;           /* sem limite no desktop */
-  object-fit: contain;        /* garante que nunca corte se height for definido */
-  margin: 0 auto;
-  border-bottom:2px solid #2563eb;
+.hero-logo{
+  width:100%;
+  height:260px;             /* desktop */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
 
-/* brilho decorativo ao fundo */
+.hero-logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;       /* mostra a imagem inteira sem cortar */
+  image-rendering:-webkit-optimize-contrast;
+  filter: drop-shadow(0 0 14px rgba(37,99,235,.35));
+}
+
+/* brilho de fundo suave */
 .hero-glow{
   pointer-events:none;
   position:absolute;
-  inset:-40% -10% auto -10%;
+  inset:-30% -10% auto -10%;
   height:120%;
-  background: radial-gradient(60% 60% at 50% 40%, rgba(37,99,235,.16), rgba(37,99,235,.05), transparent 70%);
-  animation:heroPulse 7s infinite ease-in-out;
-  z-index:1;
+  background: radial-gradient(60% 60% at 50% 40%, rgba(37,99,235,.14), rgba(37,99,235,.05), transparent 70%);
 }
-@keyframes heroPulse{ 0%{transform:scale(1);opacity:1} 50%{transform:scale(1.12);opacity:.75} 100%{transform:scale(1);opacity:1} }
 
-/* ===== CHAT ===== */
+/* Subtítulo (se existir) */
+.hero-subtitle{
+  margin:10px 0 0;
+  font-size:1.05rem;
+  color:var(--muted);
+}
+
+/* =========================
+   Área do chat
+========================= */
 #chat{
   flex:1;
   max-width:900px;
@@ -70,9 +88,8 @@ body{
   border:1px solid #22314a;
   border-radius:16px;
   box-shadow: 0 12px 30px rgba(0,0,0,.25);
-  position: relative;
-  z-index: 2;
 }
+
 #messages{
   height:420px;
   overflow-y:auto;
@@ -81,40 +98,94 @@ body{
   padding:14px;
   background: var(--bg-1);
 }
-.msg{ padding:10px 12px; margin:6px 0; border-radius:12px; max-width:78%; line-height:1.45; word-wrap:break-word }
+
+.msg{
+  padding:10px 12px;
+  margin:6px 0;
+  border-radius:12px;
+  max-width:78%;
+  line-height:1.45;
+  word-wrap:break-word;
+}
 .user{background:#1f2a44; margin-left:auto; border:1px solid #2a3b5f}
 .bot{ background:#172133; margin-right:auto; border:1px solid #24324d}
 
-.input-area{ display:flex; gap:10px; margin-top:14px }
-.input-area input{
-  flex:1; padding:12px 14px; border-radius:10px; border:1px solid #334155;
-  background:#0b1220; color:#e5e7eb; outline:none;
+.input-area{
+  display:flex;
+  gap:10px;
+  margin-top:14px;
 }
+
+.input-area input{
+  flex:1;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid #334155;
+  background:#0b1220;
+  color:#e5e7eb;
+  outline:none;
+}
+
 .input-area button{
-  padding:12px 18px; border:none; border-radius:10px; background: var(--blue);
-  color:#fff; font-weight:600; cursor:pointer; transition: transform .08s ease; pointer-events:auto;
+  padding:12px 18px;
+  border:none;
+  border-radius:10px;
+  background: var(--blue);
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+  transition: transform .08s ease, opacity .2s ease;
 }
 .input-area button:active{ transform: scale(.98) }
+.input-area button:disabled{ opacity:.6; cursor:not-allowed }
 
-/* ===== RODAPÉ ===== */
-footer{ text-align:center; padding:20px; background: var(--bg-3); border-top:1px solid #22314a }
-.social-links{ margin-top:15px; display:flex; justify-content:center; align-items:center; gap:40px }
-.social-links a{ color:#fff; font-size:3.2rem; text-decoration:none }
-.social-links .divider{ width:3px; height:50px; background-color:#fff; opacity:.9 }
-
-/* ===== RESPONSIVO ===== */
-/* No mobile, limitamos a ALTURA máx do banner (sem cortar, sem distorcer) */
-@media (max-width: 900px){
-  .hero-banner{ max-height: 260px; } /* deixa menor em notebooks/tablets estreitos */
+/* =========================
+   Rodapé + ícones
+========================= */
+footer{
+  text-align:center;
+  padding:20px;
+  background: var(--bg-3);
+  border-top:1px solid #22314a;
 }
-@media (max-width: 600px){
-  .hero-banner{ max-height: 200px; } /* celulares */
+
+.social-links{
+  margin-top:15px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:40px;
+}
+
+.social-links a{
+  color:#fff;
+  font-size:3.2rem;
+  text-decoration:none;
+}
+
+.social-links .divider{
+  width:3px;
+  height:50px;
+  background-color:#fff;
+  opacity:.9;
+}
+
+/* =========================
+   Responsivo
+========================= */
+@media (max-width: 1024px){
+  .hero-logo{ height:220px; }
+}
+
+@media (max-width: 768px){
+  .hero-logo{ height:180px; }        /* celular */
   #chat{ margin:18px 12px 28px; padding:16px }
   #messages{ height:360px }
   .social-links{ gap:28px }
   .social-links .divider{ height:42px }
 }
+
 @media (max-width: 420px){
-  .hero-banner{ max-height: 180px; } /* celulares muito pequenos */
-  #messages{ height:330px }
+  .hero-logo{ height:160px; }        /* celulares bem pequenos */
+  #messages{ height:320px }
 }
